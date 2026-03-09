@@ -36,7 +36,7 @@ async def create_embeddings(files: list[UploadFile], session: Session = Depends(
     return results
 
 @app.post("/search")
-async def search_similar(file: UploadFile, top_k: int = Form(5), session: Session = Depends(get_session)):
+async def search_similar(file: UploadFile, top_k: int = Form(5, ge=1, le=25), session: Session = Depends(get_session)):
     audio_bytes = await file.read()
     query_embedding, _ = process_audio(audio_bytes)
 
