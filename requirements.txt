@@ -1,0 +1,15 @@
+# newer versions have removed pkg_resources and tf will have issue with that
+setuptools<81
+
+# Force these specific versions for Python 3.12 compatibility
+tensorflow==2.16.1
+tf-keras==2.16.0
+tensorflow-hub==0.16.1
+
+fastapi~=0.135
+uvicorn
+sqlmodel
+psycopg2-binary
+pgvector
+librosa
+python-multipart
