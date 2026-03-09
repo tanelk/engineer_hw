@@ -21,7 +21,7 @@ def process_audio(file_bytes: bytes) -> tuple[list[float], list[dict]]:
     and the top 3 classes with their scores.
     """
     # Load audio using librosa (forces 16kHz mono as required by YAMNet)
-    wav, sr = librosa.load(io.BytesIO(file_bytes), sr=16000, mono=True)
+    wav, _ = librosa.load(io.BytesIO(file_bytes), sr=16000, mono=True)
 
     # Run YAMNet
     scores, embeddings, spectrogram = model(wav)

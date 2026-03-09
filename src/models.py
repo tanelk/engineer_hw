@@ -9,7 +9,7 @@ class AudioEmbedding(SQLModel, table=True):
     # YAMNet embeddings are 1024 dimensions
     embedding: list[float] = Field(sa_column=Column(Vector(1024)))
 
-    # Iddex for fast lookup
+    # Index for fast lookup
     __table_args__ = (
         Index(
             "idx_audio_embedding_hnsw",

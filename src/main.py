@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, UploadFile, Depends, Form
+from fastapi import FastAPI, UploadFile, Depends, Form, HTTPException
 from sqlmodel import Session, select
 
 from .database import init_db, get_session
@@ -18,6 +18,11 @@ async def create_embeddings(files: list[UploadFile], session: Session = Depends(
     results = {}
 
     for file in files:
+        if file.filename in results:
+            session.rollback()
+            # Can't have duplicates here, because we need to use file names as keys on return
+            raise HTTPException(status_code=400, detail=f"Duplicate file name '{file.filename}'")
+
         audio_bytes = await file.read()
         embedding, top_classes = process_audio(audio_bytes)
 
